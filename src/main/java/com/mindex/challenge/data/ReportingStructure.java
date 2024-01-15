@@ -29,37 +29,28 @@ public class ReportingStructure {
         return numberOfReports;
     }
 
-    private int getNumberOfDirects() {
-        if(Optional.ofNullable(employee.getDirectReports()).isPresent()){
-        for(Employee e: employee.getDirectReports()){
-            String empId = e.getEmployeeId();
-             Employee employeeDirectReport = employeeRepository.findByEmployeeId(empId);
-
-             directReports.add(employeeDirectReport.getFirstName()+" "+employeeDirectReport.getLastName());
-
-                 directReports(employeeDirectReport.getDirectReports());
-             }
-        }
-        return directReports.size();
-    }
-
     public String getDirectReports(){
         return directReports.stream().map(String::valueOf).collect(Collectors.joining("\n"));
     }
 
-    private void directReports(List<Employee> employees){
-        if(Optional.ofNullable(employees).isPresent()) {
-            for (Employee e : employees) {
-                String empId = e.getEmployeeId();
-                Employee employeeDirectReport = employeeRepository.findByEmployeeId(empId);
-
-                directReports.add(employeeDirectReport.getFirstName() + " " + employeeDirectReport.getLastName());
-                if (Optional.ofNullable(employeeDirectReport.getDirectReports()).isPresent()) {
-                    directReports(employeeDirectReport.getDirectReports());
-                }
-
-            }
+    private int getNumberOfDirects() {
+        if(Optional.ofNullable(employee).isPresent()){
+            directReports(employee.getDirectReports());
         }
+        return directReports.size();
+    }
+
+    private void directReports(List<Employee> employees){
+        if(!Optional.ofNullable(employees).isPresent()) {
+            return;
+        }
+        for (Employee e : employees) {
+            String empId = e.getEmployeeId();
+            Employee employeeDirectReport = employeeRepository.findByEmployeeId(empId);
+            directReports.add(employeeDirectReport.getFirstName() + " " + employeeDirectReport.getLastName());
+            directReports(employeeDirectReport.getDirectReports());
+        }
+
     }
 
 }
