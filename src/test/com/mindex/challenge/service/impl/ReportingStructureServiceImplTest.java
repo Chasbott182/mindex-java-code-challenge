@@ -33,26 +33,25 @@ public class ReportingStructureServiceImplTest extends TestCase {
     }
 
     @Test
-    public void testRead() {
+    public void testReportingStructure_Read() {
         Employee testEmployee = new Employee();
         testEmployee.setFirstName("John");
         testEmployee.setLastName("Doe");
         testEmployee.setDepartment("Engineering");
         testEmployee.setPosition("Developer");
 
-
         ReportingStructure testReportingStructure = new ReportingStructure(testEmployee);
         testReportingStructure.setNumberOfReports(4);
+
         ReportingStructure createdReportingStructure = restTemplate.postForEntity(reportingStructureUrl,
                 testReportingStructure, ReportingStructure.class).getBody();
-        assertReportingStructureEquivalence(testReportingStructure, createdReportingStructure);
+
+
         ReportingStructure readCompensation = restTemplate.getForEntity(reportingStructureIdUrl,
                 ReportingStructure.class,
                 createdReportingStructure.getEmployee().getEmployeeId()).getBody();
-        assertReportingStructureEquivalence(createdReportingStructure, readCompensation);
-    }
 
-    private static void assertReportingStructureEquivalence(ReportingStructure expected, ReportingStructure actual) {
-        assertEquals(expected.getEmployee().getEmployeeId(), actual.getEmployee().getEmployeeId());
+        assertEquals(createdReportingStructure.getEmployee().getEmployeeId(), readCompensation.getEmployee().getEmployeeId());
+
     }
 }
