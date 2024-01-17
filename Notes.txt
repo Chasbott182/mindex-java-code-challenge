@@ -1,0 +1,11 @@
+Hi,
+
+I believe I completed this challenge. What took me a while was that I was messing around and making changes to it days
+I completed it.  I had questions but made decisions on certain outputs and fields.  Hopefully I won't be punished for
+taking to long on this since I had other tasks outside of this one to complete.
+
+I had a few issues. First I wanted to code this in intellij and was having trouble since I had the later jdk that what
+was required for this.  It took me a bit to figure out I can only use older jdks.  After getting that work I finished
+most of the project in a few hours.  Then over the playing with the code overtime and also trying to understand what the
+instructions wanted but ended up making decisions.  I also couldn't get the test to run.  I believe they will pass but
+couldn't get them to run.  I did use Postman to test the APIs which they did work.
