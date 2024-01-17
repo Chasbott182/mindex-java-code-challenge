@@ -14,6 +14,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RunWith(SpringRunner.class)
@@ -40,19 +43,20 @@ public class CompensationServiceImplTest extends TestCase {
     }
 
     @Test
-    public void testCreateRead() {
+    public void testCompensation_Creation_AND_Read() {
         Compensation testCompensation = new Compensation();
         testCompensation.setEmployeeId("03aa1462-ffa9-4978-901b-7c001562cf6f");
         testCompensation.setSalary(140500.00f);
-        testCompensation.setEffectiveDate(new Date(1622433600));
-        Compensation createdCompensation = restTemplate.postForEntity(compensationUrl, testCompensation, Compensation.class).getBody();
-        assertCompensationEquivalence(testCompensation, createdCompensation);
-        Compensation readCompensation = restTemplate.getForEntity(compensationIdUrl, Compensation.class, createdCompensation.getEmployeeId()).getBody();
-        assertCompensationEquivalence(createdCompensation, readCompensation);
-    }
+        testCompensation.setEffectiveDate(new Date());
 
-    private static void assertCompensationEquivalence(Compensation expected, Compensation actual) {
-        assertEquals(expected.getEmployeeId(), actual.getEmployeeId());
-        assertEquals(expected.getSalary(), actual.getSalary(), 0f);
+        Compensation createdCompensation = restTemplate.postForEntity(compensationUrl, testCompensation, Compensation.class).getBody();
+        Compensation readCompensation = restTemplate.getForEntity(compensationIdUrl, Compensation.class, createdCompensation.getEmployeeId()).getBody();
+
+
+        assertEquals(testCompensation.getEmployeeId(), createdCompensation.getEmployeeId());
+        assertEquals(testCompensation.getSalary(), createdCompensation.getSalary(), 0f);
+
+        assertEquals(testCompensation.getEmployeeId(), readCompensation.getEmployeeId());
+        assertEquals(testCompensation.getSalary(), readCompensation.getSalary(), 0f);
     }
 }
