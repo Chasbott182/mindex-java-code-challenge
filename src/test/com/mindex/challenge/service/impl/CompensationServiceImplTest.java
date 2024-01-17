@@ -42,17 +42,17 @@ public class CompensationServiceImplTest extends TestCase {
     @Test
     public void testCreateRead() {
         Compensation testCompensation = new Compensation();
-        testCompensation.setEmployee(employeeRepository.findByEmployeeId("03aa1462-ffa9-4978-901b-7c001562cf6f"));
-        testCompensation.setSalary(120000.00f);
+        testCompensation.setEmployeeId("03aa1462-ffa9-4978-901b-7c001562cf6f");
+        testCompensation.setSalary(140500.00f);
         testCompensation.setEffectiveDate(new Date(1622433600));
         Compensation createdCompensation = restTemplate.postForEntity(compensationUrl, testCompensation, Compensation.class).getBody();
         assertCompensationEquivalence(testCompensation, createdCompensation);
-        Compensation readCompensation = restTemplate.getForEntity(compensationIdUrl, Compensation.class, createdCompensation.getEmployee()).getBody();
+        Compensation readCompensation = restTemplate.getForEntity(compensationIdUrl, Compensation.class, createdCompensation.getEmployeeId()).getBody();
         assertCompensationEquivalence(createdCompensation, readCompensation);
     }
 
     private static void assertCompensationEquivalence(Compensation expected, Compensation actual) {
-        assertEquals(expected.getEmployee(), actual.getEmployee());
+        assertEquals(expected.getEmployeeId(), actual.getEmployeeId());
         assertEquals(expected.getSalary(), actual.getSalary(), 0f);
     }
 }

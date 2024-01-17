@@ -31,7 +31,14 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         return reportingStructure;
     }
 
+    /**
+     * This method calculates the number an employee has.  This is done recursively.
+     * @param employees
+     * @return void
+     *
+    * */
     private void directReports(List<Employee> employees){
+
         if(!Optional.ofNullable(employees).isPresent()) {
             return;
         }
